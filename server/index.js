@@ -8,9 +8,10 @@ const FileSync = require('lowdb/adapters/FileSync');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
+const ROOT = path.join(__dirname, '..');  // project root
 
 // ── Database setup ────────────────────────────────────────────────────────────
-const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, '../data');
+const DATA_DIR = process.env.DATA_DIR || path.join(ROOT, 'data');
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 const adapter = new FileSync(path.join(DATA_DIR, 'woods-test.json'));
 const db = low(adapter);
@@ -173,7 +174,7 @@ initDB();
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(cors({ origin:'*' }));
 app.use(express.json({ limit:'2mb' }));
-app.use(express.static(path.join(__dirname, '../client')));
+app.use(express.static(path.join(ROOT, 'client')));
 app.use('/api', rateLimit({ windowMs:60000, max:300 }));
 
 // ── Settings ──────────────────────────────────────────────────────────────────
@@ -339,5 +340,5 @@ app.post('/api/widget/lead', (req,res) => {
 });
 
 // ── Serve PWA ─────────────────────────────────────────────────────────────────
-app.get('*', (req,res) => res.sendFile(path.join(__dirname,'../client/index.html')));
+app.get('*', (req,res) => res.sendFile(path.join(ROOT, 'client', 'index.html')));
 app.listen(PORT, () => console.log(`Woods Test CRM running on port ${PORT}`));

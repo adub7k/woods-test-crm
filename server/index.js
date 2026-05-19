@@ -304,9 +304,11 @@ app.post('/api/sms/send', async (req,res) => {
   const cfg = (db.get('settings').value()||{}).twilio || {};
   if (!cfg.accountSid||!cfg.authToken||!cfg.fromNumber) return res.json({ok:false,error:'Twilio not configured. Go to Settings → Messaging.'});
   try {
-    const twilio = require('twilio')(cfg.accountSid, cfg.authToken);
+    let twilio;
+    try { twilio = require('twilio'); } catch(e) { return res.json({ok:false,error:'Twilio not installed on this server. Contact support.'}); }
+    const client = twilio(cfg.accountSid, cfg.authToken);
     const clean = to.replace(/\D/g,'');
-    await twilio.messages.create({ from: cfg.fromNumber, to: '+1'+clean, body });
+    await client.messages.create({ from: cfg.fromNumber, to: '+1'+clean, body });
     upsert('conversations',{id:genId('msg'),customerId,customerName,type:'sms',direction:'outbound',body,sentAt:new Date().toISOString(),read:true});
     res.json({ok:true});
   } catch(e) { res.json({ok:false,error:e.message}); }
@@ -319,7 +321,8 @@ app.post('/api/email/send', async (req,res) => {
   const cfg = s.emailConfig || {};
   if (!cfg.user||!cfg.pass) return res.json({ok:false,error:'Email not configured. Go to Settings.'});
   try {
-    const nodemailer = require('nodemailer');
+    let nodemailer;
+    try { nodemailer = require('nodemailer'); } catch(e) { return res.json({ok:false,error:'Email module not available.'}); }
     const t = nodemailer.createTransport({service:cfg.provider==='outlook'?'hotmail':'gmail',auth:{user:cfg.user,pass:cfg.pass}});
     await t.sendMail({from:`"${cfg.fromName||s.shopName||'Woods Test CRM'}" <${cfg.user}>`,to,subject,text:body});
     upsert('conversations',{id:genId('msg'),customerId,customerName,type:'email',direction:'outbound',to,subject,body,sentAt:new Date().toISOString(),read:true});

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Woods Test CRM" />
+<meta name="theme-color" content="#1a1a1a" />
+<title>Woods Test CRM</title>
+<link rel="manifest" href="/manifest.json" />
+<link rel="stylesheet" href="/css/app.css" />
+</head>
+<body>
+
+<!-- Offline banner -->
+<div id="offline-banner">&#9888; No internet connection — some features may not work</div>
+
+<!-- Top bar -->
+<header id="topbar">
+  <div id="topbar-left">
+    <button id="menu-btn" onclick="UI.toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+    <div id="topbar-title">Woods Test CRM</div>
+  </div>
+  <div id="topbar-right">
+    <button class="icon-btn" onclick="UI.quickAdd()" title="Quick add">+</button>
+  </div>
+</header>
+
+<!-- Side drawer nav -->
+<div id="drawer-overlay" onclick="UI.closeMenu()"></div>
+<nav id="drawer">
+  <div id="drawer-header">
+    <div id="drawer-logo">&#128663;</div>
+    <div>
+      <div id="drawer-shop-name">Woods Test CRM</div>
+      <div id="drawer-tagline">Detail · Tint · Tires</div>
+    </div>
+  </div>
+  <div class="drawer-section-label">Main</div>
+  <button class="nav-item active" data-page="dashboard">&#128202; Dashboard</button>
+  <button class="nav-item" data-page="leads">&#128222; Leads <span id="leads-badge" class="nav-badge hidden"></span></button>
+  <button class="nav-item" data-page="followups">&#9989; Follow-ups <span id="followups-badge" class="nav-badge hidden"></span></button>
+  <button class="nav-item" data-page="appointments">&#128197; Appointments</button>
+  <button class="nav-item" data-page="jobs">&#128295; Jobs</button>
+  <button class="nav-item" data-page="invoices">&#129534; Invoices <span id="invoices-badge" class="nav-badge hidden"></span></button>
+  <button class="nav-item" data-page="customers">&#128101; Customers</button>
+  <button class="nav-item" data-page="messages">&#128172; Messages <span id="messages-nav-badge" class="nav-badge hidden"></span></button>
+  <button class="nav-item" data-page="fleet">&#128666; Fleet</button>
+  <button class="nav-item" data-page="revenue">&#128200; Revenue</button>
+  <div class="drawer-section-label">Configure</div>
+  <button class="nav-item" data-page="settings">&#9881;&#65039; Settings</button>
+  <div id="drawer-footer">Woods Test CRM v1.0</div>
+</nav>
+
+<!-- Bottom tab bar (mobile) -->
+<nav id="tabbar">
+  <button class="tab-btn active" data-page="dashboard">&#128202;<span>Home</span></button>
+  <button class="tab-btn" data-page="leads">&#128222;<span>Leads</span></button>
+  <button class="tab-btn" data-page="jobs">&#128295;<span>Jobs</span></button>
+  <button class="tab-btn" data-page="customers">&#128101;<span>Customers</span></button>
+  <button class="tab-btn" data-page="messages">&#128172;<span>Messages</span></button>
+  <button class="tab-btn" data-page="more">&#8943;<span>More</span></button>
+</nav>
+
+<!-- Page container -->
+<main id="main">
+  <div id="page-dashboard"    class="page active"></div>
+  <div id="page-leads"        class="page"></div>
+  <div id="page-followups"    class="page"></div>
+  <div id="page-appointments" class="page"></div>
+  <div id="page-jobs"         class="page"></div>
+  <div id="page-invoices"     class="page"></div>
+  <div id="page-customers"    class="page"></div>
+  <div id="page-messages"    class="page"></div>
+  <div id="page-fleet"        class="page"></div>
+  <div id="page-revenue"      class="page"></div>
+  <div id="page-settings"     class="page"></div>
+</main>
+
+<!-- Modal -->
+<div id="modal-overlay" class="hidden">
+  <div id="modal-sheet">
+    <div id="modal-handle"></div>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- Loading -->
+<div id="loading">
+  <div id="loading-spinner"></div>
+  <div id="loading-text">Loading Woods Test CRM...</div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/dashboard.js"></script>
+<script src="/js/leads.js"></script>
+<script src="/js/messages.js"></script>
+<script src="/js/app-pages.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
